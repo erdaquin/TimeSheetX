@@ -1,58 +1,1682 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FlashcardX</title>
-<style>
-:root{--bg:#dbe5ee;--border:#7d8b98;--text:#1e2832;--muted:#586775;--panel-top:#f9fbfd;--panel-mid:#e9eef3;--panel-bottom:#d5dde5;--card-bg:#f7f9fb;--card-border:#71808d;--shadow:#52657555;color-scheme:light}
-*{box-sizing:border-box}html,body{width:100%;min-height:100%}body{margin:0;padding:14px;overflow:hidden;background:repeating-linear-gradient(0deg,#dce5ed 0,#dce5ed 2px,#e9eff4 2px,#e9eff4 4px);color:var(--text);font:13px "Lucida Grande","Helvetica Neue",Arial,sans-serif;user-select:none}.page-shell{width:100%;height:calc(100vh - 28px);display:flex;flex-direction:column;gap:12px}.chrome{background:linear-gradient(180deg,var(--panel-top),var(--panel-mid) 48%,var(--panel-bottom));border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 0 #fff inset,0 -1px 0 #aab4bd inset,0 5px 14px var(--shadow)}.top-bar{min-height:52px;padding:8px;display:flex;align-items:center;gap:8px}.brand{display:flex;align-items:center;gap:9px;padding:0 10px 0 5px}.brand h1{margin:0;font-size:16px;line-height:1.1;text-shadow:0 1px #fff}.brand small{display:block;margin-top:2px;color:var(--muted);font-size:10px}.spacer{flex:1}.btn{min-width:88px;border:1px solid #727f89;border-radius:14px;padding:8px 11px;background:linear-gradient(#fff 0,#f7f8f9 42%,#cfd5da 48%,#e8ecef 82%,#fff 100%);color:#1f2b35;font:700 13px "Lucida Grande","Helvetica Neue",Arial,sans-serif;text-shadow:0 1px #fff;box-shadow:0 1px 0 #fff inset,0 -2px 1px #6e7a8450 inset,0 2px 4px #34495e44;cursor:pointer}.btn:hover{filter:brightness(1.06)}.btn:active{filter:brightness(.92);transform:translateY(1px)}.btn:disabled{opacity:.46;filter:grayscale(.35);cursor:default;transform:none}.btn.blue{color:#fff;text-shadow:0 -1px #173d6d;border-color:#356d9b;background:linear-gradient(#cdefff 0,#74c8ff 43%,#1685e6 49%,#54aff9 82%,#b8e7ff 100%)}.status{min-width:150px;padding:8px 10px;border-left:1px solid #a3afb9;color:#4e5d68;text-align:center;font:10px ui-monospace,SFMono-Regular,Consolas,monospace}.theme-toggle{display:inline-flex;align-items:center;padding:4px 2px;cursor:pointer}.theme-toggle input{position:absolute;width:1px;height:1px;opacity:0}.toggle-track{position:relative;width:42px;height:22px;border:1px solid #657784;border-radius:12px;background:linear-gradient(#f9fbfc 0,#d5dce2 47%,#aab6bf 52%,#eef2f5 100%);box-shadow:0 1px 0 #fff inset,0 -1px 1px #56656f88 inset,0 2px 4px #34495e44}.toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;border:1px solid #60717e;border-radius:50%;background:radial-gradient(circle at 50% 22%,#fff 0 22%,#dce5eb 45%,#8d9ca8 100%);box-shadow:0 1px 0 #fff inset,0 1px 3px #1e2a3388;transition:transform .18s}.theme-toggle input:checked+.toggle-track{border-color:#326a99;background:linear-gradient(#8fd1ff,#3d9de2 45%,#105f9f 52%,#62b6f1)}.theme-toggle input:checked+.toggle-track .toggle-thumb{transform:translateX(20px)}.app-container{flex:1;min-height:0;display:grid;grid-template-columns:minmax(420px,1fr) 260px;gap:14px}.card-window,.side-panel{min-height:0}.card-window{display:flex;flex-direction:column;overflow:hidden}.titlebar{min-height:38px;display:flex;align-items:center;border-bottom:1px solid #71818f;background:linear-gradient(#edf4fa,#d5dfe8);box-shadow:0 1px 0 #fff inset,0 -1px 0 #a5b1ba inset}.counter{align-self:stretch;min-width:104px;padding:4px 12px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;background:linear-gradient(180deg,#dce6ee,#f8fafc 48%,#cbd6df);border-right:1px solid #8999a6;box-shadow:-1px 0 0 #fff inset,0 1px 2px #52657533 inset;text-shadow:0 1px #fff}.counter strong{font-size:18px;letter-spacing:-.4px}.counter small{color:#687580;font-size:9px}.title-text{padding:0 13px;font-weight:800;text-shadow:0 1px #fff}.deck-name{margin-left:auto;padding:0 13px;color:var(--muted);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stage-wrap{position:relative;flex:1;min-height:280px;padding:26px 30px 22px;display:flex;align-items:center;justify-content:center;overflow:hidden}.stage-wrap:before{content:"";position:absolute;left:12%;right:12%;bottom:13px;height:20px;border-radius:50%;background:#1b2c3b20;filter:blur(10px)}.stage{width:min(740px,100%);height:min(500px,100%);min-height:260px;perspective:1500px}.flashcard{position:relative;width:100%;height:100%;padding:0;border:0;background:transparent;transform-style:preserve-3d;transition:transform 720ms cubic-bezier(.18,.89,.32,1.15);cursor:pointer}.flashcard.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--card-border);border-radius:12px;-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:opacity 90ms linear,visibility 0s linear 90ms;box-shadow:0 1px 0 #fff inset,0 -2px 2px #0002 inset,0 10px 24px #34495e66}.face:before{content:"";position:absolute;z-index:2;left:1px;right:1px;top:1px;height:44%;border-radius:10px 10px 48% 48%;background:linear-gradient(#ffffff99,#ffffff10);pointer-events:none}.front{z-index:2;opacity:1;visibility:visible;background:linear-gradient(#fff,#edf1f4 55%,#d9e0e6)}.front img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain}.empty{text-align:center;color:#667582;text-shadow:0 1px #fff}.empty b{display:block;font-size:16px;color:#344552;margin-bottom:4px}.back{z-index:1;opacity:0;visibility:hidden;transform:rotateY(180deg);padding:44px;color:#fff;border-color:#315f8d;background:linear-gradient(#78bdff 0,#398ee8 42%,#1264bf 49%,#287bd2 82%,#69adf2 100%);text-shadow:0 -1px 1px #002658e6,0 1px 1px #0004}.flashcard.flipped .front{opacity:0;visibility:hidden}.flashcard.flipped .back{opacity:1;visibility:visible;transition-delay:0s}.flashcard:not(.flipped) .front{transition-delay:0s}.answer{position:relative;z-index:3;max-width:100%;overflow-wrap:anywhere;text-align:center;font-size:clamp(30px,5vw,60px);font-weight:800;letter-spacing:-1px}.bottom-bar{min-height:55px;padding:8px 12px;display:flex;align-items:center;gap:8px;border-top:1px solid #8a98a4;background:linear-gradient(#f9fbfd,#d5dde5);box-shadow:0 1px 0 #fff inset}.bottom-bar .hint{flex:1;color:#586775;text-align:center;font-size:10px;text-shadow:0 1px #fff}.nav-btn{width:42px;min-width:42px;height:30px;padding:0;font-size:20px;line-height:24px}.side-panel{padding:12px;display:flex;flex-direction:column;gap:11px}.panel-section{padding:10px;border:1px solid #8997a3;border-radius:7px;background:linear-gradient(#f8fafc,#dce4eb);box-shadow:0 1px #fff inset}.panel-section h2{margin:0 0 4px;font-size:14px;text-shadow:0 1px #fff}.panel-section p{margin:0;color:#596875;font-size:11px;line-height:1.45}.side-panel .btn{width:100%;margin-top:8px}.details{display:grid;grid-template-columns:1fr auto;gap:6px 9px;font-size:11px}.details span:nth-child(odd){color:#5a6975}.details strong{text-align:right}.drop-target{outline:3px solid #1685e6;outline-offset:-5px}.kbd{display:inline-block;min-width:20px;padding:1px 4px;border:1px solid #83919c;border-radius:4px;background:linear-gradient(#fff,#d6dde2);color:#34434f;text-align:center;box-shadow:0 1px #fff inset,0 1px 1px #52657544;font:10px ui-monospace,monospace}
-:root[data-theme=dark]{--bg:#111820;--border:#526777;--text:#edf5fb;--muted:#a9bac5;--panel-top:#344451;--panel-mid:#253440;--panel-bottom:#18242e;--card-border:#596e7d;color-scheme:dark}:root[data-theme=dark] body{background:repeating-linear-gradient(0deg,#101820 0,#101820 2px,#16232d 2px,#16232d 4px)}:root[data-theme=dark] .chrome{box-shadow:0 1px 0 #708493 inset,0 -1px 0 #0a1117 inset,0 5px 14px #0009}:root[data-theme=dark] .brand h1,:root[data-theme=dark] .brand small,:root[data-theme=dark] .title-text,:root[data-theme=dark] .panel-section h2{color:#eaf3f9;text-shadow:0 -1px #071017}:root[data-theme=dark] .status{color:#b9c8d2;border-left-color:#536775}:root[data-theme=dark] .btn{color:#eaf4fa;text-shadow:0 -1px #071017;border-color:#536a79;background:linear-gradient(#607785,#405563 42%,#1e303b 49%,#354b59 82%,#617886);box-shadow:0 1px 0 #8195a1 inset,0 -2px 1px #101a2155 inset,0 2px 4px #0007}:root[data-theme=dark] .btn.blue{background:linear-gradient(#8fd1ff,#3d9de2 43%,#105f9f 49%,#318dce 82%,#75c8fb);border-color:#4c8db9}:root[data-theme=dark] .titlebar,:root[data-theme=dark] .bottom-bar{background:linear-gradient(#3c4d5a,#202d37);border-color:#0b1319;box-shadow:0 1px 0 #718392 inset,0 -1px 0 #111a21 inset}:root[data-theme=dark] .counter{color:#f2f8fc;background:linear-gradient(#405462,#263640 48%,#17242c);border-color:#111c23;box-shadow:-1px 0 #5b7080 inset,0 1px 3px #0008 inset;text-shadow:0 -1px #061017}:root[data-theme=dark] .counter small,:root[data-theme=dark] .deck-name,:root[data-theme=dark] .bottom-bar .hint{color:#a4b5c0;text-shadow:0 -1px #071017}:root[data-theme=dark] .front{z-index:2;opacity:1;visibility:visible;background:linear-gradient(#26343e,#18232b 58%,#101820)}:root[data-theme=dark] .face{box-shadow:0 1px 0 #718591 inset,0 -2px 2px #0005 inset,0 10px 28px #000b}:root[data-theme=dark] .empty,:root[data-theme=dark] .empty b{color:#b8c8d2;text-shadow:0 -1px #071017}:root[data-theme=dark] .panel-section{border-color:#596d7c;background:linear-gradient(#3b4c59,#24323d);box-shadow:0 1px #718392 inset}:root[data-theme=dark] .panel-section p,:root[data-theme=dark] .details span:nth-child(odd){color:#aabac5}:root[data-theme=dark] .kbd{background:linear-gradient(#526571,#263640);border-color:#637887;color:#eef5fa;box-shadow:0 1px #8195a1 inset}
-@media(max-width:820px){body{overflow:auto;padding:10px}.page-shell{height:auto;min-height:calc(100vh - 20px)}.top-bar{flex-wrap:wrap}.brand{width:100%}.spacer{display:none}.status{margin-left:auto}.app-container{grid-template-columns:1fr}.card-window{min-height:610px}.side-panel{min-height:0}.stage-wrap{padding:18px}.stage{height:420px}.drop-note{margin-top:0}}@media(max-width:520px){.top-bar .btn{flex:1;min-width:0}.status{width:100%;border:0;border-top:1px solid #a3afb9}.card-window{min-height:520px}.stage{height:330px}.deck-name{display:none}.bottom-bar .hint{display:none}.answer{font-size:32px}}@media(prefers-reduced-motion:reduce){.flashcard,.toggle-thumb{transition:none}}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TimeSheetX</title>
+        <style>
+            :root {
+                --bg: #f0f0f0;
+                --border: #ccc;
+                --text: #333;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Helvetica Neue", Arial, sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                user-select: none;
+            }
+            .app-container {
+                display: flex;
+                gap: 20px;
+            }
+            .timeline-wrapper {
+                background: #f4f4f4;
+                border-radius: 12px;
+                box-shadow:
+                    inset 0 0 10px #0000000d,
+                    0 4px 10px #0000001a;
+                padding: 20px 10px 20px 20px;
+                width: 400px;
+                overflow-y: auto;
+                max-height: 80vh;
+            }
+            .timeline-grid {
+                position: relative;
+                border-right: 1px solid var(--border);
+                margin-right: 50px;
+                cursor: crosshair;
+            }
+            .time-marker {
+                position: absolute;
+                width: 100%;
+                border-top: 1px solid #d1d1d1;
+                left: 0;
+                pointer-events: none;
+            }
+            .time-marker.half-hour {
+                border-top: 1px dashed #e0e0e0;
+            }
+            .time-label {
+                position: absolute;
+                right: -45px;
+                top: -7px;
+                font-size: 10px;
+                color: #666;
+            }
+            .half-hour .time-label {
+                font-size: 9px;
+                color: #999;
+            }
+            .task-block {
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                border-radius: 8px;
+                color: #fff;
+                padding: 8px 12px;
+                box-shadow:
+                    0 4px 6px #0003,
+                    inset 0 2px 4px #ffffff4d;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                overflow: hidden;
+                font-weight: 500;
+                text-shadow: 1px 1px 2px #0005;
+                transition: transform 0.1s;
+                cursor: default;
+            }
+            .task-block:hover {
+                transform: scale(1.02);
+                z-index: 10;
+            }
+            .task-block.resizing {
+                transform: none;
+                z-index: 30;
+            }
+            .task-block.compact {
+                padding-top: 4px;
+                padding-bottom: 4px;
+                align-items: center;
+            }
+            .task-title {
+                font-size: 16px;
+                line-height: 1.2;
+                width: 62%;
+                max-width: 62%;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .compact .task-title,
+            .compact .task-input {
+                font-size: 13px;
+                line-height: 1.1;
+            }
+            .task-title-text {
+                display: inline-block;
+                min-width: max-content;
+                will-change: transform;
+                pointer-events: none;
+            }
+            .task-block:hover .task-title.overflowing .task-title-text {
+                animation: marquee var(--duration, 5s) linear infinite;
+            }
+            @keyframes marquee {
+                0%,
+                12% {
+                    transform: translateX(0);
+                }
+                82%,
+                94% {
+                    transform: translateX(var(--distance, 0));
+                }
+                100% {
+                    transform: translateX(0);
+                }
+            }
+            .task-input {
+                width: 62%;
+                min-width: 0;
+                padding: 4px 7px;
+                border: 1px solid #ffffffcc;
+                border-radius: 5px;
+                outline: none;
+                background: #fffffff0;
+                color: #222;
+                font: inherit;
+                text-shadow: none;
+                user-select: text;
+            }
+            .task-duration {
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 1;
+                pointer-events: none;
+            }
+            .compact .task-duration {
+                font-size: 16px;
+                line-height: 1.1;
+            }
+            .task-block.etc {
+                background: #fff !important;
+                color: #707070;
+                border: 1px solid #9b9b9b;
+                text-shadow: none;
+                box-shadow: 0 2px 5px #0000001f;
+            }
+            .task-block.etc:after {
+                content: "ETC";
+                position: absolute;
+                left: 6px;
+                bottom: 3px;
+                font-size: 8px;
+                font-weight: 800;
+                letter-spacing: 0.8px;
+                color: #777;
+            }
+            .task-block.etc .handle {
+                background: #7775;
+            }
+            .task-block.etc .task-input {
+                color: #555;
+                border-color: #999;
+            }
+            .handle {
+                position: absolute;
+                left: 28%;
+                right: 28%;
+                height: 8px;
+                border-radius: 5px;
+                cursor: ns-resize;
+                background: #ffffff52;
+                opacity: 0;
+                transition: 0.12s;
+                z-index: 4;
+            }
+            .handle.start {
+                top: 2px;
+            }
+            .handle.end {
+                bottom: 2px;
+            }
+            .task-block:hover .handle,
+            .task-block.resizing .handle {
+                opacity: 1;
+            }
+            .handle:hover {
+                background: #ffffffb8;
+            }
+            .compact .handle {
+                height: 5px;
+            }
+            .compact .handle.start {
+                top: 1px;
+            }
+            .compact .handle.end {
+                bottom: 1px;
+            }
+            .icon-btn {
+                position: absolute;
+                top: 4px;
+                width: 20px;
+                height: 20px;
+                padding: 0;
+                border: 0;
+                border-radius: 50%;
+                background: #0006;
+                color: #fff;
+                cursor: pointer;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 5;
+            }
+            .task-block:hover .icon-btn {
+                display: flex;
+            }
+            .delete {
+                right: 4px;
+            }
+            .edit {
+                right: 28px;
+                font-size: 10px;
+                font-weight: 800;
+            }
+            .delete:hover {
+                background: #dc2626e6;
+            }
+            .edit:hover {
+                background: #000b;
+            }
+            .ghost {
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                border-radius: 8px;
+                background: #2ecc7166;
+                border: 2px dashed #27ae60;
+                pointer-events: none;
+                z-index: 20;
+            }
+            .sidebar {
+                width: 170px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .panel {
+                background: #f8f8f8;
+                border-radius: 12px;
+                padding: 15px;
+                box-shadow: 0 4px 10px #0000001a;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .panel h3 {
+                margin: 0;
+                font-size: 14px;
+            }
+            .panel label {
+                font-size: 11px;
+                text-align: left;
+                font-weight: bold;
+                color: #555;
+            }
+            .time-select {
+                background: linear-gradient(#e0e0e0, #fff);
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                padding: 4px;
+                font-size: 13px;
+                width: 100%;
+            }
+            .status {
+                font-size: 10px;
+                color: #777;
+                font-family: monospace;
+            }
+            .btn {
+                border: 0;
+                border-radius: 8px;
+                padding: 10px;
+                font-size: 15px;
+                font-weight: bold;
+                color: #fff;
+                cursor: pointer;
+                box-shadow:
+                    0 4px 6px #0003,
+                    inset 0 2px 4px #ffffff66;
+            }
+            .reset {
+                background: linear-gradient(#e67e22, #a84b00);
+                margin-top: auto;
+            }
+            .action {
+                background: linear-gradient(#5c8ae6, #2a52be);
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .task-title-text {
+                    animation: none !important;
+                }
+            }
+
+            /* Early macOS Aqua-inspired skin */
+            :root {
+                --bg: #dbe5ee;
+                --border: #8a9aaa;
+                --text: #1e2832;
+            }
+            body {
+                font-family:
+                    "Lucida Grande", "Helvetica Neue", Arial, sans-serif;
+                background: repeating-linear-gradient(
+                    0deg,
+                    #dce5ed 0,
+                    #dce5ed 2px,
+                    #e9eff4 2px,
+                    #e9eff4 4px
+                );
+                color: #1e2832;
+                padding: 24px;
+            }
+            .app-container {
+                gap: 22px;
+                align-items: flex-start;
+            }
+            .timeline-wrapper,
+            .panel {
+                background: linear-gradient(
+                    180deg,
+                    #f9fbfd 0,
+                    #e9eef3 42%,
+                    #d5dde5 100%
+                );
+                border: 1px solid #7d8b98;
+                border-radius: 10px;
+                box-shadow:
+                    0 1px 0 #fff inset,
+                    0 -1px 0 #aab4bd inset,
+                    0 5px 14px #52657555;
+            }
+            .timeline-wrapper {
+                width: 420px;
+                padding: 22px 12px 22px 22px;
+                max-height: 84vh;
+            }
+            .timeline-grid {
+                border-right-color: #8e9ba7;
+                margin-right: 52px;
+            }
+            .time-marker {
+                border-top-color: #b8c2cb;
+            }
+            .time-marker.half-hour {
+                border-top-color: #c8d0d7;
+            }
+            .time-label {
+                font-weight: 700;
+                color: #465360;
+                text-shadow: 0 1px #fff;
+            }
+            .panel {
+                padding: 14px;
+                gap: 9px;
+            }
+            .panel h3 {
+                font-size: 13px;
+                color: #263442;
+                text-shadow: 0 1px #fff;
+            }
+            .panel label {
+                color: #44515c;
+            }
+            .time-select {
+                appearance: auto;
+                background: linear-gradient(
+                    #fff 0,
+                    #f7f7f7 46%,
+                    #d7dce1 52%,
+                    #f4f6f8 100%
+                );
+                border: 1px solid #77838d;
+                border-radius: 5px;
+                color: #1f2b35;
+                box-shadow:
+                    0 1px 0 #fff inset,
+                    0 1px 2px #53606b44;
+                padding: 4px 6px;
+            }
+            .btn {
+                border: 1px solid #53697c;
+                border-radius: 14px;
+                padding: 8px 10px;
+                font-family:
+                    "Lucida Grande", "Helvetica Neue", Arial, sans-serif;
+                font-size: 13px;
+                color: #fff;
+                text-shadow: 0 -1px #173d6d;
+                box-shadow:
+                    0 1px 0 #ffffffcc inset,
+                    0 -2px 1px #143d6d55 inset,
+                    0 2px 4px #34495e55;
+            }
+            .action {
+                background: linear-gradient(
+                    #cdefff 0,
+                    #74c8ff 43%,
+                    #1685e6 49%,
+                    #54aff9 82%,
+                    #b8e7ff 100%
+                );
+                border-color: #356d9b;
+            }
+            .reset {
+                background: linear-gradient(
+                    #ffe0bf 0,
+                    #ffae58 43%,
+                    #e36a17 49%,
+                    #f59a43 82%,
+                    #ffd8ae 100%
+                );
+                border-color: #98541b;
+                text-shadow: 0 -1px #7a360e;
+            }
+            .btn:hover {
+                filter: brightness(1.06);
+            }
+            .btn:active {
+                filter: brightness(0.92);
+                transform: translateY(1px);
+            }
+            .task-block {
+                border: 1px solid #526575;
+                border-radius: 10px;
+                padding: 7px 11px;
+                box-shadow:
+                    0 1px 0 #ffffffb8 inset,
+                    0 -2px 2px #00000026 inset,
+                    0 3px 6px #4a5d6d66;
+                text-shadow: 0 -1px #00000066;
+            }
+            .task-block:before {
+                content: "";
+                position: absolute;
+                left: 1px;
+                right: 1px;
+                top: 1px;
+                height: 45%;
+                border-radius: 9px 9px 48% 48%;
+                background: linear-gradient(#ffffff80, #ffffff10);
+                pointer-events: none;
+            }
+            .task-block:hover {
+                transform: scale(1.015);
+                filter: saturate(1.06);
+                z-index: 20;
+            }
+            .task-title,
+            .task-duration {
+                position: relative;
+                z-index: 2;
+            }
+            .task-input {
+                position: relative;
+                z-index: 3;
+                border: 1px solid #607384;
+                border-radius: 5px;
+                background: #fff;
+                color: #18232d;
+                box-shadow: 0 1px 3px #31475b44 inset;
+            }
+            .handle {
+                background: #ffffff70;
+                border: 1px solid #52657555;
+                z-index: 6;
+            }
+            .handle:hover {
+                background: #fff;
+            }
+            .icon-btn {
+                z-index: 8;
+                border: 1px solid #4a5b6a;
+                background: linear-gradient(
+                    #f7fafc,
+                    #aab7c2 48%,
+                    #657887 52%,
+                    #b9c4cd
+                );
+                color: #15222d;
+                text-shadow: 0 1px #fff;
+                box-shadow: 0 1px #fff inset;
+            }
+            .delete:hover {
+                background: linear-gradient(
+                    #ffd8dc,
+                    #ff6c78 48%,
+                    #bd2432 52%,
+                    #ff8690
+                );
+                color: #fff;
+                text-shadow: 0 -1px #7e101a;
+            }
+            .edit:hover {
+                background: linear-gradient(
+                    #e4f5ff,
+                    #6fc3ff 48%,
+                    #167fd5 52%,
+                    #8bd0ff
+                );
+                color: #fff;
+                text-shadow: 0 -1px #175685;
+            }
+            .ghost {
+                border-radius: 10px;
+                background: #4aa8ff44;
+                border-color: #167fd5;
+            }
+            .status {
+                color: #4e5d68;
+            }
+            /* ETC tab hugs the outside-left edge */
+            .task-block.etc {
+                overflow: visible;
+                background: linear-gradient(#fff, #edf0f2) !important;
+                color: #68737d;
+                border: 1px solid #929ca5;
+                text-shadow: 0 1px #fff;
+            }
+            .task-block.etc:before {
+                background: linear-gradient(#ffffffee, #ffffff22);
+            }
+            .task-block.etc:after {
+                content: "ETC";
+                position: absolute;
+                right: 100%;
+                left: auto;
+                top: 4px;
+                bottom: 4px;
+                width: 16px;
+                margin-right: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+                border: 1px solid #929ca5;
+                border-right: 0;
+                border-radius: 7px 0 0 7px;
+                background: linear-gradient(90deg, #fff, #dfe4e8);
+                color: #68737d;
+                font-size: 8px;
+                font-weight: 800;
+                letter-spacing: 1px;
+                text-shadow: 0 1px #fff;
+                box-shadow: -2px 2px 3px #52657533;
+            }
+
+            /* Focus-group control revisions */
+            .action {
+                background: linear-gradient(
+                    #ffffff 0%,
+                    #f7f8f9 42%,
+                    #cfd5da 48%,
+                    #e8ecef 82%,
+                    #ffffff 100%
+                );
+                border-color: #727f89;
+                color: #1f2b35;
+                text-shadow: 0 1px #fff;
+                box-shadow:
+                    0 1px 0 #fff inset,
+                    0 -2px 1px #6e7a8450 inset,
+                    0 2px 4px #34495e44;
+            }
+            .action:hover {
+                background: linear-gradient(
+                    #ffffff 0%,
+                    #fbfcfd 42%,
+                    #d8dde1 48%,
+                    #f0f2f4 82%,
+                    #ffffff 100%
+                );
+            }
+            .reset {
+                background: linear-gradient(
+                    #ffd7d9 0%,
+                    #ff767e 43%,
+                    #c92331 49%,
+                    #ef4f5b 82%,
+                    #ffc5c9 100%
+                );
+                border-color: #8f1d28;
+                color: #fff;
+                text-shadow: 0 -1px #74151d;
+            }
+
+            /* Darker Aqua task blue for improved text contrast */
+            .task-block:not(.etc) {
+                color: #ffffff;
+                text-shadow:
+                    0 -1px 1px rgba(0, 38, 88, 0.9),
+                    0 1px 1px rgba(0, 0, 0, 0.28);
+                border-color: #315f8d;
+            }
+
+            .page-shell {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 14px;
+            }
+            .date-navigator {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 8px 10px;
+                min-width: 300px;
+                background: linear-gradient(
+                    180deg,
+                    #f9fbfd 0,
+                    #e9eef3 48%,
+                    #d5dde5 100%
+                );
+                border: 1px solid #7d8b98;
+                border-radius: 10px;
+                box-shadow:
+                    0 1px 0 #fff inset,
+                    0 -1px 0 #aab4bd inset,
+                    0 4px 12px #52657545;
+            }
+            .date-arrow {
+                width: 34px;
+                height: 28px;
+                padding: 0;
+                border: 1px solid #667785;
+                border-radius: 14px;
+                background: linear-gradient(
+                    #fff 0%,
+                    #f6f8f9 42%,
+                    #cbd2d8 49%,
+                    #edf0f2 82%,
+                    #fff 100%
+                );
+                color: #20303d;
+                font-size: 19px;
+                font-weight: bold;
+                line-height: 24px;
+                text-shadow: 0 1px #fff;
+                box-shadow:
+                    0 1px 0 #fff inset,
+                    0 -1px 1px #64727d66 inset,
+                    0 2px 4px #34495e44;
+                cursor: pointer;
+            }
+            .date-arrow:hover {
+                filter: brightness(1.05);
+            }
+            .date-arrow:active {
+                transform: translateY(1px);
+                filter: brightness(0.94);
+            }
+            .date-picker {
+                width: 205px;
+                height: 29px;
+                padding: 3px 8px;
+                border: 1px solid #697b89;
+                border-radius: 6px;
+                background: linear-gradient(
+                    #fff,
+                    #f6f7f8 46%,
+                    #d7dde2 52%,
+                    #f8fafb
+                );
+                color: #1f2b35;
+                font:
+                    700 13px "Lucida Grande",
+                    "Helvetica Neue",
+                    Arial,
+                    sans-serif;
+                box-shadow:
+                    0 1px 0 #fff inset,
+                    0 1px 2px #53606b44;
+            }
+        
+/* Enhanced unified layout */
+.task-block.is-entering{animation:task-pop-in 420ms cubic-bezier(.18,.89,.32,1.28) both;transform-origin:50% 50%}
+@keyframes task-pop-in{0%{opacity:0;transform:scale(.72) translateY(10px)}62%{opacity:1;transform:scale(1.045) translateY(-2px)}82%{transform:scale(.985) translateY(1px)}100%{opacity:1;transform:none}}
+.app-container.day-exit-left{animation:day-exit-left 210ms cubic-bezier(.55,0,.8,.2) both}.app-container.day-exit-right{animation:day-exit-right 210ms cubic-bezier(.55,0,.8,.2) both}.app-container.day-enter-left{animation:day-enter-left 430ms cubic-bezier(.16,1,.3,1) both}.app-container.day-enter-right{animation:day-enter-right 430ms cubic-bezier(.16,1,.3,1) both}
+@keyframes day-exit-left{to{opacity:0;transform:translateX(-72px)}}@keyframes day-exit-right{to{opacity:0;transform:translateX(72px)}}@keyframes day-enter-left{0%{opacity:0;transform:translateX(96px)}68%{opacity:1;transform:translateX(-7px)}84%{transform:translateX(3px)}100%{opacity:1;transform:none}}@keyframes day-enter-right{0%{opacity:0;transform:translateX(-96px)}68%{opacity:1;transform:translateX(7px)}84%{transform:translateX(-3px)}100%{opacity:1;transform:none}}
+.color-btn{right:52px}.color-dot{width:9px;height:9px;border:1px solid #ffffffcc;border-radius:50%;box-shadow:0 0 0 1px #0006;pointer-events:none}
+body{padding:12px}.page-shell{width:min(1180px,100%);align-items:stretch;gap:10px}.top-bar{display:flex;align-items:center;gap:8px;width:100%;padding:8px;background:linear-gradient(180deg,#f9fbfd,#e9eef3 48%,#d5dde5);border:1px solid #7d8b98;border-radius:10px;box-shadow:0 1px 0 #fff inset,0 -1px 0 #aab4bd inset,0 4px 12px #52657545}.top-bar .btn{min-width:88px;margin:0}.top-bar .date-navigator{min-width:300px;padding:0;border:0;box-shadow:none;background:transparent;margin-left:auto}.top-status{min-width:155px;padding:8px 10px;text-align:center;border-left:1px solid #a3afb9}.app-container{width:100%;gap:14px;align-items:stretch}.timeline-wrapper{flex:1 1 56%;width:auto;min-width:430px;max-height:82vh}.timeline-toolbar{display:flex;gap:10px;position:sticky;top:0;z-index:40;margin:-12px -2px 12px -12px;padding:8px 10px;background:linear-gradient(#f9fbfd,#d5dde5);border-bottom:1px solid #8a98a4;box-shadow:0 2px 4px #52657533}.time-bound{display:flex;align-items:center;gap:6px;flex:1}.time-bound label{font-size:11px;font-weight:bold;white-space:nowrap}.time-bound .time-select{min-width:120px}.notes-panel{display:flex;flex-direction:column;gap:9px;flex:1 1 44%;width:auto;min-width:350px;min-height:520px;max-height:82vh;align-self:stretch;background:linear-gradient(180deg,#f9fbfd,#e9eef3 48%,#d5dde5);border:1px solid #7d8b98;border-radius:10px;box-shadow:0 1px 0 #fff inset,0 -1px 0 #aab4bd inset,0 5px 14px #52657555;padding:12px}.notes-header h3{margin:0;font-size:15px}.notes-toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:6px;border:1px solid #8997a3;border-radius:6px;background:#dce3e9}.format-btn{min-width:30px;height:27px;padding:2px 7px;border:1px solid #667785;border-radius:5px;background:linear-gradient(#fff,#d3d9de 52%,#f7f8f9);color:#1f2b35;cursor:pointer;font:700 13px Georgia,serif}.notes-editor{flex:1;min-height:410px;padding:10px;overflow-y:auto;background:#fff;color:#18232d;border:1px solid #607384;border-radius:5px;box-shadow:0 1px 3px #31475b44 inset;font:13px/1.45 "Lucida Grande","Helvetica Neue",Arial,sans-serif;text-align:left;user-select:text;outline:none}.notes-editor:empty:before{content:attr(data-placeholder);color:#89939c;pointer-events:none}
+@media(max-width:850px){.top-bar{flex-wrap:wrap}.top-bar .date-navigator{order:-1;width:100%;margin-left:0}.top-status{margin-left:auto}.app-container{flex-direction:column}.timeline-wrapper,.notes-panel{min-width:0;width:100%;max-height:none}}
+@media(prefers-reduced-motion:reduce){.task-block.is-entering,.app-container.day-exit-left,.app-container.day-exit-right,.app-container.day-enter-left,.app-container.day-enter-right{animation:none!important}}
+
+/* Refined toolbar order and integrated time-bound window chrome */
+.top-bar .date-navigator {
+    margin-left: 0;
+    margin-right: 8px;
+}
+.top-status {
+    margin-left: auto;
+}
+.timeline-wrapper {
+    padding-top: 0;
+    overflow: hidden auto;
+}
+.timeline-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    margin: 0 -12px 0 -22px;
+    padding: 0;
+    display: flex;
+    gap: 0;
+    background: linear-gradient(180deg, #edf4fa 0%, #d5dfe8 100%);
+    border: 0;
+    border-bottom: 1px solid #71818f;
+    border-radius: 9px 9px 0 0;
+    box-shadow: 0 1px 0 #fff inset, 0 -1px 0 #a5b1ba inset, 0 3px 7px #5265753d;
+    overflow: hidden;
+}
+.timeline-toolbar::before {
+    content: "Time Entry Bounds";
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    color: #fff;
+    background: linear-gradient(180deg, #7199bd 0%, #3f6f9a 52%, #315d84 100%);
+    border-right: 1px solid #294f70;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    text-shadow: 0 -1px #264b6b;
+    white-space: nowrap;
+}
+.time-bound {
+    min-height: 52px;
+    padding: 8px 12px;
+    flex: 1;
+    align-items: center;
+    background: linear-gradient(180deg, #f8fafc 0%, #dce4eb 100%);
+    border-right: 1px solid #a2afb9;
+    box-shadow: 1px 0 0 #fff inset;
+}
+.time-bound:last-child {
+    border-right: 0;
+}
+.time-bound label {
+    color: #314250;
+    text-shadow: 0 1px #fff;
+}
+.timeline-grid {
+    margin-top: 18px;
+    margin-left: 0;
+}
+@media (max-width: 850px) {
+    .top-bar .date-navigator { margin-right: 0; }
+    .timeline-toolbar { margin-left: -22px; }
+    .timeline-toolbar::before { display: none; }
+}
+
+/* Overlapping entry support */
+.task-block.has-overlap {
+    box-shadow: 0 1px 0 #ffffffb8 inset, 0 -2px 2px #00000026 inset, 0 3px 7px #34495e88;
+}
+.ghost.overlap-ghost {
+    background: #9466db55;
+    border-color: #6332a8;
+}
+
+/* Refined overlapping-card presentation */
+.task-block.has-overlap {
+    min-width: 72%;
+    box-shadow: 0 1px 0 #ffffffb8 inset, 0 -2px 2px #00000026 inset, 0 5px 10px #34495e88;
+}
+.task-block.has-overlap .task-duration {
+    font-size: 25px;
+}
+
+/* Hovered entries rise above the overlap stack. */
+.task-block:hover,
+.task-block:focus-within {
+    z-index: 1000 !important;
+}
+.task-block.resizing {
+    z-index: 1100 !important;
+}
+
+/* Refined viewport layout and totals */
+html,body{width:100%;min-height:100%}body{padding:14px;min-height:100vh;overflow:hidden}.page-shell{width:100%;max-width:none;height:calc(100vh - 28px);min-height:0}.app-container{flex:1 1 auto;min-height:0}.timeline-wrapper,.notes-panel{height:100%;min-height:0;max-height:none}.timeline-toolbar::before{content:none;display:none}.timeline-toolbar{min-height:0}.time-bound{min-height:34px;padding:4px 9px;gap:5px}.time-bound label{font-size:10px}.time-bound .time-select{min-width:0;height:25px;padding:2px 5px;font-size:12px}.timeline-grid{margin-top:14px;overflow:visible}.task-block.has-overlap{min-width:0}.task-title{min-width:0}.task-duration{flex:0 0 auto;margin-left:8px;text-align:right}
+.hours-totals{flex:0 0 92px;min-height:34px;padding:3px 10px 2px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;line-height:1;background:linear-gradient(180deg,#dce6ee 0%,#f8fafc 48%,#cbd6df 100%);border-right:1px solid #8999a6;box-shadow:-1px 0 0 #fff inset,0 1px 2px #52657533 inset;color:#20303d;font-variant-numeric:tabular-nums;text-shadow:0 1px #fff}.hours-total-main{font-size:18px;font-weight:800;letter-spacing:-.35px}.hours-total-etc{margin-top:2px;font-size:10px;font-weight:400;color:#687580}
+@media(max-width:850px){body{overflow:auto}.page-shell{height:auto;min-height:calc(100vh - 20px)}.app-container{flex:none}.timeline-wrapper,.notes-panel{height:auto}}
+@media(max-width:560px){body{padding:10px}.hours-totals{flex:1 0 100%;min-height:30px;padding:3px 8px;flex-direction:row;justify-content:flex-end;gap:8px;border-right:0;border-bottom:1px solid #8999a6}.hours-total-etc{margin-top:0;align-self:flex-end;padding-bottom:2px}}
+
+
+/* Aqua appearance toggle */
+.theme-toggle {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 2px;
+    cursor: pointer;
+}
+.theme-toggle input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+.theme-toggle-track {
+    position: relative;
+    width: 42px;
+    height: 22px;
+    border: 1px solid #657784;
+    border-radius: 12px;
+    background: linear-gradient(#f9fbfc 0%, #d5dce2 47%, #aab6bf 52%, #eef2f5 100%);
+    box-shadow: 0 1px 0 #fff inset, 0 -1px 1px #56656f88 inset, 0 2px 4px #34495e44;
+    transition: background .18s ease, border-color .18s ease;
+}
+.theme-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #60717e;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 22%, #fff 0 22%, #dce5eb 45%, #8d9ca8 100%);
+    box-shadow: 0 1px 0 #fff inset, 0 1px 3px #1e2a3388;
+    transition: transform .18s ease;
+}
+.theme-toggle input:checked + .theme-toggle-track {
+    border-color: #326a99;
+    background: linear-gradient(#8fd1ff 0%, #3d9de2 45%, #105f9f 52%, #62b6f1 100%);
+}
+.theme-toggle input:checked + .theme-toggle-track .theme-toggle-thumb {
+    transform: translateX(20px);
+}
+.theme-toggle input:focus-visible + .theme-toggle-track {
+    outline: 2px solid #1685e6;
+    outline-offset: 2px;
+}
+
+/* Dark Aqua: graphite chrome, blue glass highlights, and preserved depth. */
+:root[data-theme="dark"] {
+    --bg: #111820;
+    --border: #4d6172;
+    --text: #edf5fb;
+    color-scheme: dark;
+}
+:root[data-theme="dark"] body {
+    color: #edf5fb;
+    background: repeating-linear-gradient(0deg, #101820 0, #101820 2px, #16232d 2px, #16232d 4px);
+}
+:root[data-theme="dark"] .top-bar,
+:root[data-theme="dark"] .timeline-wrapper,
+:root[data-theme="dark"] .notes-panel,
+:root[data-theme="dark"] .panel {
+    background: linear-gradient(180deg, #344451 0, #253440 45%, #18242e 100%);
+    border-color: #526777;
+    box-shadow: 0 1px 0 #708493 inset, 0 -1px 0 #0a1117 inset, 0 5px 14px #0009;
+}
+:root[data-theme="dark"] .timeline-toolbar {
+    background: linear-gradient(180deg, #3c4d5a 0%, #202d37 100%);
+    border-bottom-color: #0b1319;
+    box-shadow: 0 1px 0 #718392 inset, 0 -1px 0 #111a21 inset, 0 3px 7px #0008;
+}
+:root[data-theme="dark"] .time-bound {
+    background: linear-gradient(180deg, #3b4c59 0%, #24323d 100%);
+    border-right-color: #15212a;
+    box-shadow: 1px 0 0 #526674 inset;
+}
+:root[data-theme="dark"] .time-bound label,
+:root[data-theme="dark"] .notes-header h3,
+:root[data-theme="dark"] .panel h3 {
+    color: #e8f1f7;
+    text-shadow: 0 -1px #071017;
+}
+:root[data-theme="dark"] .time-select,
+:root[data-theme="dark"] .date-picker {
+    color: #edf6fc;
+    background: linear-gradient(#455762 0, #34444f 46%, #1b2831 52%, #354752 100%);
+    border-color: #647987;
+    box-shadow: 0 1px 0 #718591 inset, 0 1px 3px #0008;
+}
+:root[data-theme="dark"] .action,
+:root[data-theme="dark"] .date-arrow,
+:root[data-theme="dark"] .format-btn {
+    color: #eaf4fa;
+    text-shadow: 0 -1px #071017;
+    border-color: #536a79;
+    background: linear-gradient(#607785 0%, #405563 42%, #1e303b 49%, #354b59 82%, #617886 100%);
+    box-shadow: 0 1px 0 #8195a1 inset, 0 -2px 1px #101a2155 inset, 0 2px 4px #0007;
+}
+:root[data-theme="dark"] .action:hover,
+:root[data-theme="dark"] .date-arrow:hover,
+:root[data-theme="dark"] .format-btn:hover {
+    background: linear-gradient(#6d8796 0%, #496372 42%, #243844 49%, #405b69 82%, #6d8795 100%);
+}
+:root[data-theme="dark"] .notes-toolbar {
+    color: #edf5fb;
+    background: #22313c;
+    border-color: #596d7c;
+}
+:root[data-theme="dark"] .notes-editor {
+    color: #e5eef4;
+    background: linear-gradient(#18232b, #121b22);
+    border-color: #596e7d;
+    box-shadow: 0 1px 4px #000b inset;
+}
+:root[data-theme="dark"] .notes-editor:empty::before { color: #8295a2; }
+:root[data-theme="dark"] .hours-totals {
+    color: #f2f8fc;
+    background: linear-gradient(180deg, #405462 0%, #263640 48%, #17242c 100%);
+    border-right-color: #111c23;
+    box-shadow: -1px 0 0 #5b7080 inset, 0 1px 3px #0008 inset;
+    text-shadow: 0 -1px #061017;
+}
+:root[data-theme="dark"] .hours-total-etc { color: #9eafba; }
+:root[data-theme="dark"] .timeline-grid { border-right-color: #506474; }
+:root[data-theme="dark"] .time-marker { border-top-color: #405362; }
+:root[data-theme="dark"] .time-marker.half-hour { border-top-color: #31424f; }
+:root[data-theme="dark"] .time-label { color: #d0dde6; text-shadow: 0 -1px #071017; }
+:root[data-theme="dark"] .half-hour .time-label { color: #8194a1; }
+:root[data-theme="dark"] .status { color: #b9c8d2; }
+:root[data-theme="dark"] .top-status { border-left-color: #536775; }
+:root[data-theme="dark"] .task-block.etc {
+    color: #d2dce3;
+    background: linear-gradient(#3b4851, #26323a) !important;
+    border-color: #75838d;
+    text-shadow: 0 -1px #10171c;
+}
+:root[data-theme="dark"] .task-block.etc::before { background: linear-gradient(#ffffff35, #ffffff08); }
+:root[data-theme="dark"] .task-block.etc::after {
+    color: #d0dae0;
+    background: linear-gradient(90deg, #394750, #202b32);
+    border-color: #75838d;
+    text-shadow: 0 -1px #10171c;
+}
+:root[data-theme="dark"] .task-block.etc .task-input {
+    color: #e4edf2;
+    background: #18232a;
+    border-color: #71828e;
+}
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle-track,
+    .theme-toggle-thumb { transition: none; }
+}
+
+
+/* Current-time indicator, shown only on today's timeline. */
+.current-time-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 1200;
+    pointer-events: none;
+    background: #168cff;
+    border-top: 1px solid rgba(255, 255, 255, .95);
+    border-bottom: 1px solid rgba(255, 255, 255, .95);
+    box-shadow: 0 0 4px rgba(22, 140, 255, .8);
+    transform: translateY(-2px);
+}
+.current-time-label {
+    position: absolute;
+    right: -59px;
+    top: 50%;
+    min-width: 55px;
+    padding: 2px 3px;
+    border: 1px solid rgba(255, 255, 255, .95);
+    border-radius: 4px;
+    background: linear-gradient(#55b6ff, #0873d7 52%, #36a3f4);
+    color: #fff;
+    font: 700 9px/1.1 "Lucida Grande", "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 0 -1px rgba(0, 52, 108, .85);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .35), 0 1px 0 rgba(255, 255, 255, .5) inset;
+    transform: translateY(-50%);
+}
+:root[data-theme="dark"] .current-time-line {
+    background: #35a8ff;
+    border-color: rgba(255, 255, 255, .9);
+    box-shadow: 0 0 5px rgba(53, 168, 255, .95);
+}
+:root[data-theme="dark"] .current-time-label {
+    background: linear-gradient(#66c3ff, #0874c9 52%, #299ce9);
+    border-color: rgba(255, 255, 255, .9);
+}
+@media (prefers-reduced-motion: reduce) {
+    .current-time-line { transition: none; }
+}
+
 </style>
-</head>
-<body>
-<div class="page-shell">
-<header class="top-bar chrome" aria-label="Flashcard controls">
-  <div class="brand"><div><h1>FlashcardX</h1><small>Local image flashcards</small></div></div>
-  <button class="btn blue" id="openFolder">Open Folder</button>
-  <button class="btn" id="openFiles">Open Images</button>
-  <button class="btn" id="shuffleTop" disabled>Shuffle</button>
-  <span class="spacer"></span>
-  <label class="theme-toggle" title="Toggle dark Aqua appearance"><input id="theme" type="checkbox" role="switch" aria-label="Dark mode"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
-  <div class="status" id="status">Waiting for a deck</div>
-</header>
-<main class="app-container">
-  <section class="card-window chrome" id="dropZone" aria-label="Flashcard viewer">
-    <div class="titlebar"><div class="counter"><strong id="counter">0 / 0</strong><small>Current Card</small></div><div class="title-text">Card Viewer</div><div class="deck-name" id="deckName">No deck loaded</div></div>
-    <div class="stage-wrap"><div class="stage"><button class="flashcard" id="card" aria-label="Flip flashcard"><div class="face front" id="front"><div class="empty"><b>No cards loaded</b>Open a folder or drop image files here.</div></div><div class="face back"><div class="answer" id="answer"></div></div></button></div></div>
-    <div class="bottom-bar"><button class="btn nav-btn" id="previous" aria-label="Previous card" disabled>&#8249;</button><div class="hint">Click to flip &nbsp; <span class="kbd">Space</span> &nbsp; Navigate &nbsp; <span class="kbd">&#8592;</span> <span class="kbd">&#8594;</span></div><button class="btn nav-btn blue" id="next" aria-label="Next card" disabled>&#8250;</button></div>
-  </section>
-  <aside class="side-panel chrome" aria-label="Deck tools">
-    <div class="panel-section"><h2>Deck</h2><p>The image is the question. Its filename, without the final extension, is the answer.</p></div>
-    <div class="panel-section details"><span>Cards</span><strong id="cardTotal">0</strong><span>Position</span><strong id="position">-</strong><span>Order</span><strong id="order">Filename</strong></div>
-    <div class="panel-section"><button class="btn" id="shuffle" disabled>Shuffle Deck</button><button class="btn" id="restart" disabled>Restart Deck</button></div>
-  </aside>
-</main>
-</div>
-<input id="folderInput" type="file" accept="image/*" webkitdirectory directory multiple hidden>
-<input id="fileInput" type="file" accept="image/*" multiple hidden>
+    </head>
+    <body>
+        <div class="page-shell">
+<header class="top-bar" aria-label="Timesheet controls">
+<div class="date-navigator" aria-label="Timesheet date navigation"><button class="date-arrow" id="prev-day" type="button" aria-label="Previous day">&#8249;</button><input class="date-picker" id="work-date" type="date" aria-label="Timesheet date"><button class="date-arrow" id="next-day" type="button" aria-label="Next day">&#8250;</button></div>
+<button class="btn reset" id="reset">Clear Day</button><button class="btn action" id="import">Open</button><input id="file" type="file" accept=".json,application/json" hidden><button class="btn action" id="export">Save</button><label class="theme-toggle" title="Toggle dark Aqua appearance"><input id="theme-toggle" type="checkbox" role="switch" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-thumb"></span></span></label><div id="status" class="status top-status">Idle</div>
+</header><main class="app-container"><section class="timeline-wrapper" aria-label="Time entries"><div class="timeline-toolbar" aria-label="Time bounds and totals"><div class="hours-totals" aria-label="Hours totals" title="Counted hours; ETC hours"><span class="hours-total-main" id="total-counted" aria-label="Counted hours">0.0hr</span><span class="hours-total-etc" id="total-etc" aria-label="ETC hours">0.0hr</span></div><div class="time-bound"><label for="start">Day Start</label><select id="start" class="time-select"></select></div><div class="time-bound"><label for="end">Day End</label><select id="end" class="time-select"></select></div></div><div class="timeline-grid" id="grid"></div></section>
+<aside class="notes-panel" id="notes-panel" aria-label="Daily notes"><div class="notes-header"><h3>Daily Notes</h3></div><div class="notes-toolbar" role="toolbar" aria-label="Note formatting"><button class="format-btn" type="button" data-command="bold" aria-label="Bold">B</button><button class="format-btn" type="button" data-command="italic" aria-label="Italic"><i>I</i></button><button class="format-btn" type="button" data-command="underline" aria-label="Underline"><u>U</u></button><button class="format-btn" type="button" data-command="insertOrderedList" aria-label="Numbered list">1.</button><button class="format-btn" type="button" data-command="insertUnorderedList" aria-label="Bulleted list">-</button></div><div class="notes-editor" id="notes-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Enter notes for this day..."></div></aside></main></div>
 <script>
-(()=>{'use strict';
-const $=id=>document.getElementById(id),D={folder:$('folderInput'),files:$('fileInput'),card:$('card'),front:$('front'),answer:$('answer'),counter:$('counter'),total:$('cardTotal'),position:$('position'),order:$('order'),status:$('status'),deckName:$('deckName'),drop:$('dropZone'),theme:$('theme')};
-let deck=[],index=0,flipped=false,shuffled=false;const imageExt=/\.(avif|bmp|gif|jpe?g|png|svg|webp)$/i;
-function release(){deck.forEach(x=>URL.revokeObjectURL(x.url))}
-function setStatus(s){D.status.textContent=s}
-function load(fileList){release();const list=[...fileList].filter(f=>f.type.startsWith('image/')||imageExt.test(f.name));deck=list.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'})).map(file=>({url:URL.createObjectURL(file),answer:file.name.replace(/\.[^.]+$/,''),path:file.webkitRelativePath||file.name}));index=0;flipped=false;shuffled=false;const path=deck[0]?.path||'';D.deckName.textContent=path.includes('/')?path.split('/')[0]:'Selected images';setStatus(deck.length?`Loaded ${deck.length} card${deck.length===1?'':'s'}`:'No supported images found');render()}
-function render(){const has=deck.length>0;D.card.classList.toggle('flipped',flipped);['previous','next','shuffle','shuffleTop','restart'].forEach(id=>$(id).disabled=!has);D.counter.textContent=has?`${index+1} / ${deck.length}`:'0 / 0';D.total.textContent=deck.length;D.position.textContent=has?String(index+1):'-';D.order.textContent=shuffled?'Shuffled':'Filename';if(!has){D.front.innerHTML='<div class="empty"><b>No cards loaded</b>Open a folder or drop image files here.</div>';D.answer.textContent='';D.deckName.textContent='No deck loaded';return}D.front.replaceChildren();const img=new Image();img.src=deck[index].url;img.alt='Flashcard question';D.front.append(img);D.answer.textContent=deck[index].answer}
-function flip(){if(!deck.length)return;flipped=!flipped;D.card.classList.toggle('flipped',flipped)}function move(n){if(!deck.length)return;index=(index+n+deck.length)%deck.length;flipped=false;render();setStatus(`Card ${index+1} of ${deck.length}`)}
-function shuffle(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}index=0;flipped=false;shuffled=true;render();setStatus('Deck shuffled')}
-$('openFolder').onclick=()=>{D.folder.value='';D.folder.click()};$('openFiles').onclick=()=>{D.files.value='';D.files.click()};D.folder.onchange=e=>load(e.target.files);D.files.onchange=e=>load(e.target.files);D.card.onclick=flip;$('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('shuffle').onclick=shuffle;$('shuffleTop').onclick=shuffle;$('restart').onclick=()=>{index=0;flipped=false;render();setStatus('Deck restarted')};
-addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}else if(e.key==='ArrowRight'){e.preventDefault();move(1)}else if(e.code==='Space'){e.preventDefault();flip()}});
-['dragenter','dragover'].forEach(name=>addEventListener(name,e=>{e.preventDefault();D.drop.classList.add('drop-target')}));['dragleave','drop'].forEach(name=>addEventListener(name,e=>{e.preventDefault();D.drop.classList.remove('drop-target')}));addEventListener('drop',e=>load(e.dataTransfer.files));
-const THEME_KEY='flashcardx_theme';function applyTheme(theme){const dark=theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';D.theme.checked=dark}let saved=localStorage.getItem(THEME_KEY);if(saved!=='dark'&&saved!=='light')saved=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';applyTheme(saved);D.theme.onchange=()=>{const theme=D.theme.checked?'dark':'light';localStorage.setItem(THEME_KEY,theme);applyTheme(theme)};
-addEventListener('beforeunload',release);render();
-})();
-</script>
-</body>
+            document.addEventListener("DOMContentLoaded", () => {
+                const $ = (id) => document.getElementById(id),
+                    D = {
+                        grid: $("grid"),
+                        start: $("start"),
+                        end: $("end"),
+                        status: $("status"),
+                        reset: $("reset"),
+                        imp: $("import"),
+                        file: $("file"),
+                        exp: $("export"),
+                        prevDay: $("prev-day"),
+                        nextDay: $("next-day"),
+                        workDate: $("work-date"),
+                        app: document.querySelector(".app-container"),
+                        notesEditor: $("notes-editor"),
+                        totalCounted: $("total-counted"),
+                        totalETC: $("total-etc"),
+                        themeToggle: $("theme-toggle"),
+                    };
+                const KEY = "timesheetx_v6_history",
+                    LEGACY_KEY = "timesheetx_v5",
+                    MH = 1,
+                    PALETTE = [
+                        "linear-gradient(#78bdff 0%,#398ee8 42%,#1264bf 49%,#287bd2 82%,#69adf2 100%)",
+                        "linear-gradient(#c8a7ff 0%,#9466db 42%,#6332a8 49%,#7d4fc2 82%,#b993ef 100%)",
+                        "linear-gradient(#ff9aa2 0%,#e85b67 42%,#b72331 49%,#d43e4b 82%,#f47b84 100%)",
+                        "linear-gradient(#ffc27a 0%,#eb8a32 42%,#b8550e 49%,#d56d1c 82%,#f2a654 100%)",
+                        "linear-gradient(#91dda5 0%,#4eae69 42%,#24783c 49%,#379451 82%,#72c789 100%)",
+                    ], COLOR_BORDERS=["#315f8d","#54268c","#98202c","#9b470b","#1f6b35"], COLOR_DOTS=["#287bd2","#7d4fc2","#d43e4b","#d56d1c","#379451"], COLOR_NAMES=["blue","violet","red","orange","green"];
+                const localDateKey = (date = new Date()) => {
+                    const y = date.getFullYear(),
+                        m = String(date.getMonth() + 1).padStart(2, "0"),
+                        d = String(date.getDate()).padStart(2, "0");
+                    return `${y}-${m}-${d}`;
+                };
+                let selectedDate = localDateKey(),
+                    history = {},
+                    dayStart = 8,
+                    dayEnd = 17,
+                    tasks = [],
+                    colorIndex = 0,
+                    drawing = false,
+                    drawingAllowOverlap = false,
+                    overlapDragCandidate = null,
+                    drawY = 0,
+                    ghost = null,
+                    resize = null,
+                    notes = "";
+                const timeLabel = (h) => {
+                    const hour = Math.floor(h),
+                        min = h % 1 ? "30" : "00";
+                    return `${hour % 12 || 12}:${min} ${hour >= 12 ? "PM" : "AM"}`;
+                };
+                for (let h = 5; h <= 10.5; h += 0.5)
+                    D.start.add(new Option(timeLabel(h), h, h === 8, h === 8));
+                for (let h = 15; h <= 21; h += 0.5)
+                    D.end.add(new Option(timeLabel(h), h, h === 17, h === 17));
+                const snap = (m) => Math.round(m / 30) * 30,
+                    fmt = (h) => `${h.toFixed(1)}hr`,
+                    snapshotDay = () => ({
+                        dayStart,
+                        dayEnd,
+                        tasks: tasks.map((t) => {
+                            const clean = { ...t };
+                            delete clean.editing;
+                            delete clean.isNew;
+                            delete clean.original;
+                            return clean;
+                        }),
+                        colorIndex,
+                        notes,
+                    }),
+                    save = () => {
+                        history[selectedDate] = snapshotDay();
+                        localStorage.setItem(
+                            KEY,
+                            JSON.stringify({ version: 6, history }),
+                        );
+                        D.status.textContent = `Synced ${selectedDate}`;
+                    };
+                function applyDay(dateKey) {
+                    selectedDate = dateKey;
+                    const x = history[selectedDate];
+                    dayStart =
+                        x && Number.isFinite(+x.dayStart) ? +x.dayStart : 8;
+                    dayEnd = x && Number.isFinite(+x.dayEnd) ? +x.dayEnd : 17;
+                    tasks =
+                        x && Array.isArray(x.tasks)
+                            ? x.tasks.map((t, index) => ({ ...t, stackOrder: Number.isFinite(+t.stackOrder) ? +t.stackOrder : index }))
+                            : [];
+                    colorIndex =
+                        x && Number.isFinite(+x.colorIndex) ? +x.colorIndex : 0;
+                    notes = x && typeof x.notes === "string" ? x.notes : "";
+                    D.notesEditor.innerHTML = notes;
+                    D.start.value = dayStart;
+                    D.end.value = dayEnd;
+                    D.workDate.value = selectedDate;
+                }
+                function load() {
+                    try {
+                        const stored = JSON.parse(localStorage.getItem(KEY));
+                        if (
+                            stored &&
+                            stored.history &&
+                            typeof stored.history === "object"
+                        ) {
+                            history = stored.history;
+                        } else {
+                            const old = JSON.parse(
+                                localStorage.getItem(LEGACY_KEY),
+                            );
+                            if (old) {
+                                history[selectedDate] = {
+                                    dayStart: +old.dayStart || 8,
+                                    dayEnd: +old.dayEnd || 17,
+                                    tasks: Array.isArray(old.tasks)
+                                        ? old.tasks
+                                        : [],
+                                    colorIndex: +old.colorIndex || 0,
+                                };
+                                localStorage.setItem(
+                                    KEY,
+                                    JSON.stringify({ version: 6, history }),
+                                );
+                            }
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    applyDay(selectedDate);
+                }
+                function normalize() {
+                    const totalMinutes = Math.max(30, Math.round((dayEnd - dayStart) * 60));
+                    let cursor = 0;
+                    tasks = tasks.filter((t) => t && typeof t === "object");
+                    let nextOrder = tasks.reduce((m,t) => Number.isFinite(+t.stackOrder) ? Math.max(m,+t.stackOrder+1) : m, 0);
+                    tasks.forEach((t) => {
+                        t.stackOrder = Number.isFinite(+t.stackOrder) ? +t.stackOrder : nextOrder++;
+                        const rs=Number(t.startMinutes), rh=Number(t.hours);
+                        t.startMinutes=Math.max(0,Math.min(totalMinutes-30,Number.isFinite(rs)?snap(rs):cursor));
+                        const mins=Number.isFinite(rh)?snap(rh*60):30;
+                        t.hours=Math.max(.5,Math.min((totalMinutes-t.startMinutes)/60,mins/60));
+                        t.name=typeof t.name==="string"?t.name:"Untitled Segment";
+                        cursor=Math.max(cursor,t.startMinutes+t.hours*60);
+                    });
+                    tasks.sort((a,b)=>a.startMinutes-b.startMinutes||a.stackOrder-b.stackOrder);
+                }
+                function colorize() { tasks.forEach((t)=>{const i=Number.isFinite(+t.colorIndex)?((+t.colorIndex%PALETTE.length)+PALETTE.length)%PALETTE.length:0;t.colorIndex=i;t.color=PALETTE[i];}); }
+                function updateCurrentTimeLine() {
+                    D.grid.querySelector(".current-time-line")?.remove();
+                    const now = new Date();
+                    if (selectedDate !== localDateKey(now)) return;
+                    const currentMinutes = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60,
+                        startMinutes = dayStart * 60,
+                        endMinutes = dayEnd * 60;
+                    if (currentMinutes < startMinutes || currentMinutes > endMinutes) return;
+                    const line = document.createElement("div"),
+                        label = document.createElement("span");
+                    line.className = "current-time-line";
+                    line.style.top = `${currentMinutes - startMinutes}px`;
+                    label.className = "current-time-label";
+                    label.textContent = now.toLocaleTimeString([], {
+                        hour: "numeric",
+                        minute: "2-digit",
+                        hour12: true,
+                    });
+                    line.append(label);
+                    D.grid.append(line);
+                }
+                function grid() {
+                    D.grid.innerHTML = "";
+                    const total = Math.round((dayEnd - dayStart) * 60);
+                    D.grid.style.height = `${total}px`;
+                    for (let o = 0; o <= total; o += 30) {
+                        const absolute = Math.round(dayStart * 60) + o,
+                            h = Math.floor(absolute / 60) % 24,
+                            m = absolute % 60,
+                            mark = document.createElement("div");
+                        mark.className = `time-marker ${m === 30 ? "half-hour" : ""}`;
+                        mark.style.top = `${o}px`;
+                        const lab = document.createElement("div");
+                        lab.className = "time-label";
+                        lab.textContent = `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`;
+                        mark.append(lab);
+                        D.grid.append(mark);
+                    }
+                    render();
+                    updateCurrentTimeLine();
+                }
+                function mergedOverlapMinutes(task) {
+                    if (task.isETC) return 0;
+                    const start=task.startMinutes,end=start+task.hours*60,
+                        ranges=tasks.filter(o=>o!==task&&!o.isETC&&o.stackOrder>task.stackOrder)
+                        .map(o=>[Math.max(start,o.startMinutes),Math.min(end,o.startMinutes+o.hours*60)])
+                        .filter(([a,b])=>b>a).sort((a,b)=>a[0]-b[0]);
+                    if(!ranges.length)return 0;
+                    let total=0,[a,b]=ranges[0];
+                    for(let i=1;i<ranges.length;i++){const [c,d]=ranges[i];if(c<=b)b=Math.max(b,d);else{total+=b-a;a=c;b=d;}}
+                    return total+b-a;
+                }
+                function buildOverlapLayouts() {
+                    const layouts=new Map(),active=[];
+                    tasks.forEach(task=>{for(let i=active.length-1;i>=0;i--)if(active[i].end<=task.startMinutes)active.splice(i,1);
+                        const used=new Set(active.map(x=>x.lane));let lane=0;while(used.has(lane))lane++;
+                        layouts.set(task,{lane,count:active.length+1,offset:Math.min(lane,4)*7});
+                        active.push({end:task.startMinutes+task.hours*60,lane});});return layouts;
+                }
+                function render() {
+                    document
+                        .querySelectorAll(".task-block")
+                        .forEach((x) => x.remove());
+                    normalize();
+                    colorize();
+                    const overlapLayouts=buildOverlapLayouts();
+                    const countedMinutes=tasks.reduce((sum,t)=>t.isETC?sum:sum+Math.max(0,t.hours*60-mergedOverlapMinutes(t)),0);
+                    const etcMinutes=tasks.reduce((sum,t)=>sum+(t.isETC?t.hours*60:0),0);
+                    D.totalCounted.textContent=fmt(countedMinutes/60);
+                    D.totalETC.textContent=fmt(etcMinutes/60);
+                    tasks.forEach((t, index) => {
+                        const block = document.createElement("div");
+                        block.className = `task-block${t.hours <= 0.5 ? " compact" : ""}${t.isETC ? " etc" : ""}`;
+                        if (t.isNew) block.classList.add("is-entering");
+                        block.style.top = `${t.startMinutes}px`;
+                        block.style.height = `${t.hours * 60}px`;
+                        block.style.background = t.isETC ? "#fff" : t.color;
+                        if (!t.isETC) block.style.borderColor = COLOR_BORDERS[t.colorIndex];
+                        const overlapMinutes = mergedOverlapMinutes(t),
+                            layout = overlapLayouts.get(t)||{lane:0,count:1,offset:0};
+                        if (layout.count > 1) {
+                            block.classList.add("has-overlap");
+                            block.style.left=layout.offset?`calc(${layout.offset}% + 10px)`:"10px";
+                            block.style.right="10px";
+                            block.style.zIndex = String(12 + layout.lane);
+                        }
+                        let title;
+                        if (t.editing) {
+                            title = document.createElement("input");
+                            title.className = "task-input";
+                            title.value = t.name || "";
+                            title.placeholder = "Enter task comment...";
+                            let done = false;
+                            const finish = (cancel) => {
+                                if (done) return;
+                                done = true;
+                                if (cancel && t.isNew) tasks.splice(index, 1);
+                                else {
+                                    t.name = cancel
+                                        ? t.original ||
+                                          t.name ||
+                                          "Untitled Segment"
+                                        : title.value.trim() ||
+                                          "Untitled Segment";
+                                    delete t.editing;
+                                    delete t.isNew;
+                                    delete t.original;
+                                }
+                                render();
+                                save();
+                            };
+                            title.onmousedown = (e) => e.stopPropagation();
+                            title.onclick = (e) => e.stopPropagation();
+                            title.onkeydown = (e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    finish(false);
+                                } else if (e.key === "Escape") {
+                                    e.preventDefault();
+                                    finish(true);
+                                }
+                            };
+                            title.onblur = () => finish(false);
+                            requestAnimationFrame(() => title.focus());
+                        } else {
+                            title = document.createElement("div");
+                            title.className = "task-title";
+                            title.title = `${t.name}${t.isETC ? " - ETC, not counted" : ""}`;
+                            const span = document.createElement("span");
+                            span.className = "task-title-text";
+                            span.textContent = t.name;
+                            title.append(span);
+                            requestAnimationFrame(() => {
+                                const x = span.scrollWidth - title.clientWidth;
+                                if (x > 1) {
+                                    title.classList.add("overflowing");
+                                    title.style.setProperty(
+                                        "--distance",
+                                        `${-(x + 12)}px`,
+                                    );
+                                    title.style.setProperty(
+                                        "--duration",
+                                        `${Math.max(3, x / 28 + 2)}s`,
+                                    );
+                                }
+                            });
+                        }
+                        const dur = document.createElement("div");
+                        dur.className = "task-duration";
+                        const effectiveHours = Math.max(0, t.hours - overlapMinutes / 60);
+                        dur.textContent = fmt(effectiveHours);
+                        if (overlapMinutes > 0) block.title = `${fmt(effectiveHours)} counted after newer overlap`;
+                        const del = document.createElement("button");
+                        del.className = "icon-btn delete";
+                        del.textContent = "x";
+                        del.onclick = (e) => {
+                            e.stopPropagation();
+                            tasks.splice(index, 1);
+                            render();
+                            save();
+                        };
+                        const etcBtn = document.createElement("button");
+                        etcBtn.className = "icon-btn edit";
+                        etcBtn.textContent = "E";
+                        etcBtn.title = t.isETC
+                            ? "Restore counted entry"
+                            : "Mark as ETC (not counted)";
+                        etcBtn.setAttribute("aria-label", etcBtn.title);
+                        etcBtn.onclick = (e) => {
+                            e.stopPropagation();
+                            t.isETC = !t.isETC;
+                            render();
+                            save();
+                        };
+                        const colorBtn=document.createElement("button"); colorBtn.className="icon-btn color-btn"; const colorDot=document.createElement("span"); colorDot.className="color-dot"; const nextColorIndex=(t.colorIndex+1)%PALETTE.length; colorDot.style.background=COLOR_DOTS[nextColorIndex]; colorBtn.title=`Change entry color to ${COLOR_NAMES[nextColorIndex]}`; colorBtn.setAttribute("aria-label",colorBtn.title); colorBtn.append(colorDot); colorBtn.onclick=(e)=>{e.stopPropagation();t.colorIndex=(t.colorIndex+1)%PALETTE.length;t.color=PALETTE[t.colorIndex];render();save();};
+                        block.onmousedown = (e) => {
+                            if (e.button !== 0 || e.detail > 1 || e.target.closest("input,button,.handle")) return;
+                            overlapDragCandidate = { clientX: e.clientX, clientY: e.clientY };
+                            e.stopPropagation();
+                        };
+                        block.ondblclick = (e) => {
+                            overlapDragCandidate = null;
+                            if (ghost) { ghost.remove(); ghost = null; }
+                            drawing = false;
+                            drawingAllowOverlap = false;
+                            if (e.target.closest("input,button,.handle"))
+                                return;
+                            e.preventDefault();
+                            t.original = t.name;
+                            t.editing = true;
+                            render();
+                        };
+                        const makeHandle = (mode) => {
+                            const h = document.createElement("div");
+                            h.className = `handle ${mode}`;
+                            h.onmousedown = (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const end = t.startMinutes + t.hours * 60;
+                                resize = {
+                                    mode,
+                                    t,
+                                    block,
+                                    dur,
+                                    y: e.clientY,
+                                    origStart: t.startMinutes,
+                                    origEnd: end,
+                                    origMinutes: t.hours * 60,
+                                    // Resizing may cross other entries; only the day bounds
+                                    // and the 30-minute minimum constrain the operation.
+                                    minStart: 0,
+                                    maxStart: end - 30,
+                                    maxMinutes:
+                                        (dayEnd - dayStart) * 60 -
+                                        t.startMinutes,
+                                };
+                                block.classList.add("resizing");
+                            };
+                            return h;
+                        };
+                        block.append(
+                            title,
+                            dur,
+                            del,
+                            etcBtn,
+                            colorBtn,
+                            makeHandle("start"),
+                            makeHandle("end"),
+                        );
+                        D.grid.append(block);
+                    });
+                }
+                D.grid.onmousedown = (e) => {
+                    if (e.target.closest(".task-block")) return;
+                    drawing = true;
+                    drawingAllowOverlap = false;
+                    const r = D.grid.getBoundingClientRect();
+                    drawY = snap(Math.max(0, e.clientY - r.top));
+                    ghost = document.createElement("div");
+                    ghost.className = "ghost";
+                    ghost.style.top = `${drawY}px`;
+                    ghost.style.height = "0";
+                    D.grid.append(ghost);
+                };
+                document.onmousemove = (e) => {
+                    if (overlapDragCandidate && !drawing) {
+                        const dx = e.clientX - overlapDragCandidate.clientX,
+                            dy = e.clientY - overlapDragCandidate.clientY;
+                        if (Math.hypot(dx, dy) >= 6) {
+                            const r = D.grid.getBoundingClientRect();
+                            drawing = true;
+                            drawingAllowOverlap = true;
+                            drawY = snap(Math.max(0, Math.min(overlapDragCandidate.clientY - r.top, r.height)));
+                            ghost = document.createElement("div");
+                            ghost.className = "ghost overlap-ghost";
+                            ghost.style.top = `${drawY}px`;
+                            ghost.style.height = "0";
+                            D.grid.append(ghost);
+                            overlapDragCandidate = null;
+                        }
+                    }
+                    if (resize) {
+                        const delta = snap(e.clientY - resize.y);
+                        if (resize.mode === "start") {
+                            const ns = Math.max(
+                                    resize.minStart,
+                                    Math.min(
+                                        resize.maxStart,
+                                        resize.origStart + delta,
+                                    ),
+                                ),
+                                mins = resize.origEnd - ns;
+                            resize.t.startMinutes = ns;
+                            resize.t.hours = mins / 60;
+                            resize.block.style.top = `${ns}px`;
+                            resize.block.style.height = `${mins}px`;
+                        } else {
+                            const mins = Math.max(
+                                30,
+                                Math.min(
+                                    resize.maxMinutes,
+                                    snap(resize.origMinutes + delta),
+                                ),
+                            );
+                            resize.t.hours = mins / 60;
+                            resize.block.style.height = `${mins}px`;
+                        }
+                        resize.dur.textContent = fmt(resize.t.hours);
+                        return;
+                    }
+                    if (!drawing || !ghost) return;
+                    const r = D.grid.getBoundingClientRect(),
+                        y = Math.max(0, Math.min(e.clientY - r.top, r.height));
+                    ghost.style.height = `${Math.max(0, y - drawY)}px`;
+                };
+                document.onmouseup = (e) => {
+                    if (overlapDragCandidate && !drawing) {
+                        overlapDragCandidate = null;
+                        return;
+                    }
+                    if (resize) {
+                        resize.block.classList.remove("resizing");
+                        resize = null;
+                        render();
+                        save();
+                        return;
+                    }
+                    if (!drawing) return;
+                    drawing = false;
+                    const allowOverlap = drawingAllowOverlap;
+                    drawingAllowOverlap = false;
+                    const r = D.grid.getBoundingClientRect(),
+                        end = Math.max(
+                            0,
+                            Math.min(e.clientY - r.top, r.height),
+                        );
+                    ghost?.remove();
+                    const mins = snap(end - drawY);
+                    if (
+                        mins >= 30 &&
+                        (allowOverlap ||
+                            !tasks.some(
+                                (t) =>
+                                    drawY < t.startMinutes + t.hours * 60 &&
+                                    drawY + mins > t.startMinutes,
+                            )) &&
+                        drawY + mins <= r.height
+                    ) {
+                        tasks.push({
+                            name: "",
+                            hours: mins / 60,
+                            startMinutes: drawY,
+                            stackOrder: tasks.reduce((m,t)=>Math.max(m,Number.isFinite(+t.stackOrder)?+t.stackOrder+1:0),0),
+                            colorIndex: colorIndex++ % PALETTE.length,
+                            editing: true,
+                            isNew: true,
+                        });
+                        render();
+                    } else render();
+                };
+                let dayTransitioning=false; const waitForAnimation=(el,ms)=>new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};el.addEventListener("animationend",finish,{once:true});setTimeout(finish,ms)}); async function showDay(dateKey,direction){if(dayTransitioning||dateKey===selectedDate)return;dayTransitioning=true;save();const exit=direction>0?"day-exit-left":"day-exit-right",enter=direction>0?"day-enter-left":"day-enter-right";D.app.classList.add(exit);await waitForAnimation(D.app,260);D.app.classList.remove(exit);applyDay(dateKey);grid();D.status.textContent=`Viewing ${selectedDate}`;D.app.classList.add(enter);await waitForAnimation(D.app,500);D.app.classList.remove(enter);dayTransitioning=false;} function moveDay(delta){const [y,m,d]=selectedDate.split("-").map(Number),next=new Date(y,m-1,d);next.setDate(next.getDate()+delta);showDay(localDateKey(next),delta);}
+                D.prevDay.onclick = () => moveDay(-1);
+                D.nextDay.onclick = () => moveDay(1);
+                D.workDate.onchange = () => {
+                    if (!D.workDate.value) {
+                        D.workDate.value = selectedDate;
+                        return;
+                    }
+                    const target=D.workDate.value,direction=target>selectedDate?1:-1;D.workDate.value=selectedDate;showDay(target,direction);
+                };
+                document.querySelectorAll(".format-btn").forEach(button=>{button.onmousedown=e=>e.preventDefault();button.onclick=()=>{D.notesEditor.focus();document.execCommand(button.dataset.command,false,null);notes=D.notesEditor.innerHTML;save();};}); let notesSaveTimer=null;D.notesEditor.oninput=()=>{notes=D.notesEditor.innerHTML;clearTimeout(notesSaveTimer);notesSaveTimer=setTimeout(save,250)};D.notesEditor.onblur=()=>{notes=D.notesEditor.innerHTML;clearTimeout(notesSaveTimer);save()};
+                function boundaries() {
+                    const a = parseFloat(D.start.value),
+                        b = parseFloat(D.end.value);
+                    if (a >= b) {
+                        alert("Day end must be after day start.");
+                        D.start.value = dayStart;
+                        D.end.value = dayEnd;
+                        return;
+                    }
+                    if (
+                        tasks.length &&
+                        !confirm(
+                            "Changing boundaries clears current entries. Continue?",
+                        )
+                    ) {
+                        D.start.value = dayStart;
+                        D.end.value = dayEnd;
+                        return;
+                    }
+                    tasks = [];
+                    dayStart = a;
+                    dayEnd = b;
+                    grid();
+                    save();
+                }
+                D.start.onchange = boundaries;
+                D.end.onchange = boundaries;
+                const csvParse = (text) => {
+                    const rows = [];
+                    let row = [],
+                        field = "",
+                        q = false;
+                    for (let i = 0; i < text.length; i++) {
+                        const c = text[i];
+                        if (q) {
+                            if (c === '"' && text[i + 1] === '"') {
+                                field += '"';
+                                i++;
+                            } else if (c === '"') q = false;
+                            else field += c;
+                        } else if (c === '"') q = true;
+                        else if (c === ",") {
+                            row.push(field);
+                            field = "";
+                        } else if (c === "\n") {
+                            row.push(field.replace(/\r$/, ""));
+                            if (row.some((v) => v.trim())) rows.push(row);
+                            row = [];
+                            field = "";
+                        } else field += c;
+                    }
+                    row.push(field.replace(/\r$/, ""));
+                    if (row.some((v) => v.trim())) rows.push(row);
+                    return rows;
+                };
+                D.imp.onclick = () => {
+                    D.file.value = "";
+                    D.file.click();
+                };
+                D.file.onchange = async () => {
+                    try {
+                        const file = D.file.files[0];
+                        if (!file) return;
+                        const data = JSON.parse(
+                            (await file.text()).replace(/^\uFEFF/, ""),
+                        );
+                        if (
+                            !data ||
+                            !data.history ||
+                            typeof data.history !== "object"
+                        )
+                            throw Error(
+                                "This is not a TimeSheetX history backup.",
+                            );
+                        if (
+                            Object.keys(history).length &&
+                            !confirm(
+                                "Opening this backup replaces the entire saved history. Continue?",
+                            )
+                        )
+                            return;
+                        history = data.history;
+                        localStorage.setItem(
+                            KEY,
+                            JSON.stringify({ version: 6, history }),
+                        );
+                        applyDay(
+                            history[selectedDate]
+                                ? selectedDate
+                                : localDateKey(),
+                        );
+                        grid();
+                        D.status.textContent = `Opened ${Object.keys(history).length} day(s)`;
+                    } catch (err) {
+                        alert(`Backup open failed: ${err.message}`);
+                    }
+                };
+                D.exp.onclick = () => {
+                    save();
+                    const payload = JSON.stringify(
+                        {
+                            format: "TimeSheetX",
+                            version: 6,
+                            exportedAt: new Date().toISOString(),
+                            history,
+                        },
+                        null,
+                        2,
+                    );
+                    const a = document.createElement("a"),
+                        url = URL.createObjectURL(
+                            new Blob([payload], { type: "application/json" }),
+                        );
+                    a.href = url;
+                    a.download = `timesheetx_history_${selectedDate}.json`;
+                    a.click();
+                    setTimeout(() => URL.revokeObjectURL(url), 0);
+                    D.status.textContent = `Saved ${Object.keys(history).length} day(s)`;
+                };
+                D.reset.onclick = () => {
+                    if (confirm(`Clear all entries for ${selectedDate}?`)) {
+                        tasks = [];
+                        colorIndex = 0;
+                        save();
+                        render();
+                    }
+                };
+                const THEME_KEY = "timesheetx_theme";
+                const applyTheme = (theme) => {
+                    const dark = theme === "dark";
+                    document.documentElement.dataset.theme = dark ? "dark" : "light";
+                    D.themeToggle.checked = dark;
+                    D.themeToggle.setAttribute("aria-checked", String(dark));
+                };
+                let savedTheme = localStorage.getItem(THEME_KEY);
+                if (savedTheme !== "dark" && savedTheme !== "light") {
+                    savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+                        ? "dark"
+                        : "light";
+                }
+                applyTheme(savedTheme);
+                D.themeToggle.onchange = () => {
+                    const theme = D.themeToggle.checked ? "dark" : "light";
+                    localStorage.setItem(THEME_KEY, theme);
+                    applyTheme(theme);
+                };
+                load();
+                grid();
+                const currentTimeTimer = setInterval(updateCurrentTimeLine, 15000);
+                window.addEventListener("focus", updateCurrentTimeLine);
+                document.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) updateCurrentTimeLine();
+                });
+            });
+        </script>
+    </body>
 </html>
